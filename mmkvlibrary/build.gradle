@@ -1,8 +1,5 @@
-plugins {
-    id 'com.android.library'
-}
-
-apply plugin: 'maven'
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 29
@@ -27,20 +24,20 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
 }
 
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            pom.groupId = 'com.wjxls'
-            pom.artifactId = "mmkvutil_android"
-            pom.version = "1.0.0"
-            pom.packaging = 'aar'
-            repository(url: uri("${rootProject.projectDir}/repo"))
-        }
-    }
+publish {
+    repoName="wjkj"//仓库名(repoName 如果没有填写，上传的库默认仓库是maven)
+    userOrg = 'gaoxiaoxiong'      //bintray注册的用户名
+    groupId = 'com.wjxls'     //compile引用时的第1部分groupId
+    artifactId = 'mmkvutil_android'     //compile引用时的第2部分项目名
+    publishVersion = '1.0.0'    //compile引用时的第3部分版本号
+    desc = ''//d项目描述
+    website = 'https://github.com/caocao123/mmkvUtils' //github 托管地址
 }
+
 
 dependencies {
     compileOnly 'com.tencent:mmkv-static:1.2.6'
