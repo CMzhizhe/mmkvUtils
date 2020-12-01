@@ -2,6 +2,7 @@
 
 #### 1.引入依赖
 ```
+  implementation 'com.wjxls:mmkvutil_android:1.0.0'
   implementation 'com.tencent:mmkv-static:x.x.x' //https://github.com/Tencent/MMKV/blob/master/readme_cn.md
 ```
 
