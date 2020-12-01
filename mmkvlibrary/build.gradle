@@ -1,0 +1,47 @@
+plugins {
+    id 'com.android.library'
+}
+
+apply plugin: 'maven'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "30.0.1"
+
+    defaultConfig {
+        minSdkVersion 22
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            pom.groupId = 'com.wjxls'
+            pom.artifactId = "mmkvutil_android"
+            pom.version = "1.0.0"
+            pom.packaging = 'aar'
+            repository(url: uri("${rootProject.projectDir}/repo"))
+        }
+    }
+}
+
+dependencies {
+    compileOnly 'com.tencent:mmkv-static:1.2.6'
+}
