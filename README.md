@@ -2,7 +2,8 @@
 
 #### 1.引入依赖
 ```
-  implementation 'com.github.CMzhizhe:mmkvUtils:v1.0.3'
+  maven { url 'https://jitpack.io' }
+  implementation 'com.github.CMzhizhe:mmkvUtils:v1.0.4'
   implementation 'com.tencent:mmkv-static:x.x.x' //https://github.com/Tencent/MMKV/blob/master/readme_cn.md
 ```
 
