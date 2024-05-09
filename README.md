@@ -2,7 +2,7 @@
 
 #### 1.引入依赖
 ```
-  implementation 'com.wjxls:mmkvutil_android:1.0.0'
+  implementation 'com.github.CMzhizhe:mmkvUtils:v1.0.3'
   implementation 'com.tencent:mmkv-static:x.x.x' //https://github.com/Tencent/MMKV/blob/master/readme_cn.md
 ```
 
@@ -21,10 +21,22 @@
 
 ### 3.使用方式
 ```
-      WJSharePreferenceConfigImpl.init(context,null);//初始化 可以指定名称
+import com.gxx.mmkvlibrary.MMSp.Companion.instance
+    
+class MainActivity:Activity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        instance.setString("name", "张三")
+        Log.e("MainActivity", "使用mmkv->" + instance.getString("name", "")+"????")
+        //写文字到本地的文件里面
+        GlobalScope.launch {
+            instance.writeFileString("abc","你好你好你好你好你好你好你好你好你好1111111111")
+            Log.e("MainActivity", instance.getFileString("abc"))
+        }
+    }
 
-     WJSharePreferenceConfigImpl.getWjSharePreferenceConfigImpl().setString("name","张三");
-     Log.e("MainActivity",WJSharePreferenceConfigImpl.getWjSharePreferenceConfigImpl().getString("name",""));
+}
 ```
 
 
