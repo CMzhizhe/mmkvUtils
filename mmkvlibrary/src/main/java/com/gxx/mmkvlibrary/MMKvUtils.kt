@@ -16,24 +16,24 @@ import java.io.OutputStreamWriter
 import java.io.Reader
 
 
-class MMSp(context: Context, mmkvName: String?) : SharePreferenceListener {
-    companion object{
-       lateinit var instance: MMSp
-       const val MMKV_DEFAULT_NAME = "mmSharePreference"
-    }
+object MMKvUtils : SharePreferenceListener {
+   private val MMKV_DEFAULT_NAME = "mmSharePreference"
 
     private var mmkv:MMKV? = null;
     private var writeFilePath = "";
-    init {
-        val path = context.filesDir.absolutePath + File.separator + "mmkv"
-        writeFilePath = context.filesDir.absolutePath + File.separator + "mmkv" + File.separator + "files"
-        MMKV.initialize(context,path)
-        mmkv = MMKV.mmkvWithID(if(mmkvName.isNullOrEmpty()) MMKV_DEFAULT_NAME else mmkvName,MMKV.MULTI_PROCESS_MODE)
-    }
+
 
     class Builder{
        private var context:Context? = null;
        private var mmkvName:String? = null;
+
+        fun getContext():Context{
+            return context!!
+        }
+
+        fun getMMkvName():String?{
+            return mmkvName
+        }
 
         fun setContext(context: Context): Builder {
             this.context = context;
@@ -45,47 +45,53 @@ class MMSp(context: Context, mmkvName: String?) : SharePreferenceListener {
             return this;
         }
 
-        fun build(): MMSp {
+        fun build() {
             if(context == null){
                 throw IllegalStateException("未设置 context")
             }
-            instance = MMSp(context!!,mmkvName);
-            return instance
+
+            init(this)
         }
     }
 
 
+    private fun init(builder: Builder){
+        val path = builder.getContext().filesDir.absolutePath + File.separator + "mmkv"
+        writeFilePath = builder.getContext().filesDir.absolutePath + File.separator + "mmkv" + File.separator + "files"
+        MMKV.initialize(builder.getContext(),path)
+        mmkv = MMKV.mmkvWithID(if(builder.getMMkvName().isNullOrEmpty()) MMKV_DEFAULT_NAME else builder.getMMkvName(),MMKV.MULTI_PROCESS_MODE)
+    }
 
 
-    override fun setString(var1: String, var2: String) {
+    override fun putString(var1: String, var2: String) {
         mmkv?.encode(var1,var2)
     }
 
-    override fun setInt(var1: String, var2: Int) {
+    override fun putInt(var1: String, var2: Int) {
        mmkv?.encode(var1,var2)
     }
 
-    override fun setBoolean(var1: String, var2: Boolean) {
+    override fun putBoolean(var1: String, var2: Boolean) {
         mmkv?.encode(var1,var2)
     }
 
-    override fun setByte(var1: String, var2: ByteArray) {
+    override fun putByte(var1: String, var2: ByteArray) {
         mmkv?.encode(var1,var2)
     }
 
-    override fun setShort(var1: String, var2: Short) {
-        this.setString(var1,var2.toString())
+    override fun putShort(var1: String, var2: Short) {
+        this.putString(var1,var2.toString())
     }
 
-    override fun setLong(var1: String, var2: Long) {
+    override fun putLong(var1: String, var2: Long) {
         mmkv?.encode(var1,var2)
     }
 
-    override fun setFloat(var1: String, var2: Float) {
+    override fun putFloat(var1: String, var2: Float) {
         mmkv?.encode(var1,var2)
     }
 
-    override fun setDouble(var1: String, var2: Double) {
+    override fun putDouble(var1: String, var2: Double) {
         mmkv?.encode(var1,var2)
     }
 
@@ -172,8 +178,8 @@ class MMSp(context: Context, mmkvName: String?) : SharePreferenceListener {
 
         withContext(Dispatchers.IO){
             try {
-                val file = File(writeFilePath, "${fileName}.txt")
-                inputStream = FileInputStream(file)
+                val targetFile = File(writeFilePath, "${fileName}.txt")
+                inputStream = FileInputStream(targetFile)
                 reader = InputStreamReader(inputStream)
                 bufferedReader = BufferedReader(reader)
 

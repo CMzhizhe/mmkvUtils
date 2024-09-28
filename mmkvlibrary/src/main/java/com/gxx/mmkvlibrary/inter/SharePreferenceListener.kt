@@ -2,21 +2,21 @@ package com.gxx.mmkvlibrary.inter
 
 interface SharePreferenceListener {
 
-    fun setString(var1: String, var2: String)
+    fun putString(var1: String, var2: String)
 
-    fun setInt(var1: String, var2: Int)
+    fun putInt(var1: String, var2: Int)
 
-    fun setBoolean(var1: String, var2: Boolean)
+    fun putBoolean(var1: String, var2: Boolean)
 
-    fun setByte(var1: String, var2: ByteArray)
+    fun putByte(var1: String, var2: ByteArray)
 
-    fun setShort(var1: String, var2: Short)
+    fun putShort(var1: String, var2: Short)
 
-    fun setLong(var1: String, var2: Long)
+    fun putLong(var1: String, var2: Long)
 
-    fun setFloat(var1: String, var2: Float)
+    fun putFloat(var1: String, var2: Float)
 
-    fun setDouble(var1: String, var2: Double)
+    fun putDouble(var1: String, var2: Double)
 
     fun getString(var1: String, defaultValue: String): String
 
